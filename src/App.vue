@@ -54,11 +54,20 @@ const produtos = [
 </script>
 
 <template>
- 
-<div class="barracima">
-    <img src="carrinho.png" alt="carinho.png" width="60" class="carinho" >
-    <h1>Compras Gamers</h1>
-    <button class="dog"><img src="carinhpcachorro.png" alt="cachorro" width="60"></button>
+<div class="barra">
+    
+    <div class="logo">
+        <img src="carrinho.png" alt="carinho.png" width="100px" class="carinho" >
+    </div>
+
+    <div class="barracima">
+        <h1>Compras Gamers</h1>
+    </div>
+
+    <div class="botaocar">
+        <button class="dog"><img src="carinhpcachorro.png" alt="cachorro" width="100px"></button>
+    </div>
+
 </div>
 
 </template>
@@ -71,9 +80,24 @@ const produtos = [
 .carinho {
     border-radius: 100px;
 }
+
+.barra{
+    display: grid;
+    grid-template-columns: 100px 500px 100px;
+    grid-template-rows: auto;
+    justify-content: space-between;
+    border-bottom: 10px solid black;
+}
+
 .barracima {
-    background-color: blue;
+    color: black;
+    text-align: center;
+}
+.botaocar {
     color: white;
-    margin-bottom: 1000px;
+}
+
+.logo {
+    color: white;
 }
 </style>
