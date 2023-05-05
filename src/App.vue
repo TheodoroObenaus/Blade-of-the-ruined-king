@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue';
+
 const produtos = [
     {
         id: 1,
@@ -51,6 +53,19 @@ const produtos = [
         preco: 9.90
     }
 ]
+
+const carrinho = ref  ([
+
+    coisas [
+        a
+    ]
+
+])
+
+function incrementar(index) {
+    carrinho.value[index].quantidade++
+  }
+
 </script>
 
 <template>
@@ -70,6 +85,16 @@ const produtos = [
 
 </div>
 
+<div class="itens">
+
+    <ul class="itens">
+        <p v-for="(item, index) in produtos">
+            {{ item.nome }} <button @click="incrementar(index)">+</button>
+        </p>
+    </ul>
+
+</div>
+
 </template>
 
 <style scoped>
@@ -83,7 +108,7 @@ const produtos = [
 
 .barra{
     display: grid;
-    grid-template-columns: 100px 500px 100px;
+    grid-template-columns: 100px 250px 100px;
     grid-template-rows: auto;
     justify-content: space-between;
     border-bottom: 10px solid black;
@@ -99,5 +124,10 @@ const produtos = [
 
 .logo {
     color: white;
+}
+
+.itens {
+    font-size: 50px;
+    color: black;
 }
 </style>
