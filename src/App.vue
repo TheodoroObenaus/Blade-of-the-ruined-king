@@ -1,133 +1,183 @@
 <script setup>
-import { ref } from 'vue';
-
-const produtos = [
+import { ref } from 'vue'
+const produtos = ref([
     {
         id: 1,
         nome: 'Camiseta',
+        quantidade: 0,
         preco: 49.90
     },
     {
         id: 2,
         nome: 'Calça',
+        quantidade: 0,
         preco: 99.90
     },
     {
         id: 3,
         nome: 'Meia',
-        preco: 9.90
+        preco: 9.90,
+        quantidade: 0
     },
     {
         id: 4,
         nome: 'Sapato',
+        quantidade: 0,
         preco: 199.90
     },
     {
         id: 5,
         nome: 'Boné',
-        preco: 29.90
+        preco: 29.90,
+        quantidade: 0
     },
     {
         id: 6,
         nome: 'Óculos',
+        quantidade: 0,
         preco: 99.90
     },
     {
         id: 7,
         nome: 'Relógio',
+        quantidade: 0,
         preco: 299.90
     },
     {
         id: 8,
         nome: 'Bermuda',
+        quantidade: 0,
         preco: 79.90
     },
     {
         id: 9,
         nome: 'Cueca',
+        quantidade: 0,
         preco: 19.90
     },
     {
         id: 10,
         nome: 'Meia',
-        preco: 9.90
+        preco: 9.90,
+        quantidade: 0
     }
 ]
+)
+const carrinho = ref({
+  items: [],
+  total: 0
+})
 
-const carrinho = ref  ([
+let valorTotal = ref(0)
 
-    coisas [
-        a
-    ]
-
-])
-
-function incrementar(index) {
-    carrinho.value[index].quantidade++
+function addcar(produto) {
+  carrinho.value.items.push({
+    id: produto.id, 
+    nome: produto.nome, 
+    preco: produto.preco, 
+    quantidade: produto.quantidade,
+    total: produto.preco * produto.quantidade
+  });
+  carrinho.value.total += produto.preco * produto.quantidade
+}
+function add(index){
+  produtos.value[index].quantidade++
+  const pos = carrinho.value.items.indexOf(carrinho.value.items.find(c => c.id===produtos.value[index].id))
+  if(pos != -1) {
+    carrinho.value.total -= carrinho.value.items[pos].total
+    carrinho.value.items[pos].total = ++carrinho.value.items[pos].quantidade * carrinho.value.items[pos].preco 
+    carrinho.value.total += carrinho.value.items[pos].total
+ 
   }
-
+}
+function diminui(index){
+  produtos.value[index].quantidade--
+}
 </script>
 
 <template>
-<div class="barra">
-    
-    <div class="logo">
-        <img src="carrinho.png" alt="carinho.png" width="100px" class="carinho" >
+
+        <div class="row"></div>
+
+<div class="barracima">
+
+    <div>
+        <img src="carrinho.png" alt="carrinho" class="pidao imgs">
     </div>
 
-    <div class="barracima">
+    <div>
         <h1>Compras Gamers</h1>
     </div>
 
-    <div class="botaocar">
-        <button class="dog"><img src="carinhpcachorro.png" alt="cachorro" width="100px"></button>
+    <div>
+        <button><img src="carinhpcachorro.png" alt="chorro" class="carito imgs"></button>
     </div>
 
 </div>
+ 
+<div class="separa" v-for="(produto, index) in produtos" :key="produto.id">
 
-<div class="itens">
+    <div  class="corpo"> 
+        <b> {{ produto.id }} - {{ produto.nome }} </b>
+            <br>
+        <h6>Preço: {{ produto.preco }}</h6>
+        <h6>Quantidade: {{ produto.quantidade }}</h6>
 
-    <ul class="itens">
-        <p v-for="(item, index) in produtos">
-            {{ item.nome }} <button @click="incrementar(index)">+</button>
-        </p>
-    </ul>
+        <button type="button" @click="diminui(index)" class="botao mudarcor2">-</button>
+        <button type="button" @click="add(index)" class="botao mudarcor">+</button>
+        <button type="button" @click="addcar(produto)" class="botao mudarcor">Adicionar</button>
+  </div>
 
 </div>
 
+<div>
+    {{  carrinho }}
+</div>
 </template>
 
 <style scoped>
-.dog {
-    border: solid white 1px;
-    background-color: white;
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+.barracima {
+    display: grid;
+    grid-template-columns: 100px 250px 100px;
+    justify-content: space-between;
+    border-bottom: black solid 10px;
+    font-family: 'Caveat', cursive;
 }
-.carinho {
+
+.pidao {
     border-radius: 100px;
 }
 
-.barra{
-    display: grid;
-    grid-template-columns: 100px 250px 100px;
-    grid-template-rows: auto;
-    justify-content: space-between;
-    border-bottom: 10px solid black;
-}
-
-.barracima {
+.corpo {
+    font-size: 25px;
+    padding: 25px;
     color: black;
-    text-align: center;
-}
-.botaocar {
-    color: white;
+    border: solid 10px black;
+    border-radius: 15px;
+    width: 200px;
+    margin-top: 30px;
+    font-family: 'Caveat', cursive;
+  }
+
+.botao {
+    font-size: 25px;
+    font-family: 'Caveat', cursive;
 }
 
-.logo {
-    color: white;
-}
+  .mudarcor:hover {
+    transition: 0.5s;
+    color: green;
+  }
 
-.itens {
-    font-size: 50px;
-    color: black;
-}
+  .mudarcor2:hover {
+    transition: 0.5s;
+    color: red;
+  }
+
+  .imgs {
+    width: 50px;
+  }
 </style>
